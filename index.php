@@ -62,7 +62,7 @@
 				}
 		}
 		else if(isset($_GET["delete"]))
-		{
+		{	
 			$deleteSql="CALL deleteCountry('".$_GET['country_id']."')";
 			if(mysqli_query($connect,$deleteSql))
 			{
@@ -110,7 +110,7 @@
 					<tr>
 						<td><?php echo $row["country_name"]; ?></td>
 						<td><a href="index.php?edit=1&country_id=<?php echo $row["country_id"];?>">Edit</a></td>
-						<td><a href="" class="btn_delete" id="<?php echo $row["country_id"];?>">Delete</a></td>
+						<td><a href="index.php?delete=1&country_id=<?php echo $row["country_id"];?>" class="btn_delete" id="<?php echo $row["country_id"];?>">Delete</a></td>
 					</tr>
 					<?php
 				}
@@ -130,10 +130,10 @@
 </body>
 </html>
 
-<script>
+<!--<script>
 	$(document).ready(function(){
 		$('.btn_delete').click(function(){
-			var country_id=$(this).attr("id");
+			var country_id= $(this).attr("id");
 			if(confirm("Are you sure you want to delete this?"))
 			{
 				window.location="index.php?delete=1&country_id="+country_id+"";
