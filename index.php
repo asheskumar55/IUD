@@ -1,24 +1,7 @@
 
 <?php
 	include_once 'connection.php';
-	// This is for add the data in the website 
-	if(isset($_POST["btn_add"])){
-		$insertSql="CALL insertCOuntry('".$_POST["country_name"]."')";
-		if(mysqli_query($connect, $insertSql))
-		{
-			header("location:index.php?inserted=1");
-		}
-	}
-	// This is for edit the data in website
-	if(isset($_POST["btn_edit"]))
-	{
-		$updateSql= "CALL updateCountry('".$_POST["country_id"]."','".$_POST["country_name"]."')";
-		if(mysqli_query($connect,$updateSql))
-		{
-			header("location:index.php?updated=1");
-		}
-	}
-
+	include_once 'server.php';
 ?>
 
 <!DOCTYPE html>
@@ -38,36 +21,7 @@
 		// If the edit button is pressed 
 		if(isset($_GET["edit"]))
 		{
-			$singlsql= "CALL singleCountry('".$_GET["country_id"]."')";
-			$singleResult=mysqli_query($connect,$singlsql);
-			if(mysqli_num_rows($singleResult)>0)
-			{
-				while($singleRow= mysqli_fetch_array($singleResult))
-					{
-		?>
-			<form name="add_country" method="post">
-			<h3 align="center">Edit Country</h3>
-			<div class="form-group">
-				<label>Enter Country Name</label>
-				<input type="text" name="country_name" class="form-control" value="<?php echo $singleRow["country_name"]?>">
-			</div>
-			<div class="form-group" align="center">
-				<input type="hidden" name="country_id" value="<?php echo $singleRow["country_id"]; ?>"/>
-				<input type="submit" name="btn_edit" value="Edit" class="btn btn-info">
-			</div>
-		</form>
-			<?php
-					}
-					mysqli_next_result($connect);
-				}
-		}
-		else if(isset($_GET["delete"]))
-		{	
-			$deleteSql="CALL deleteCountry('".$_GET['country_id']."')";
-			if(mysqli_query($connect,$deleteSql))
-			{
-				header("location:index.php?deleted=1");
-			}
+			include_once 'Tools/Edit.php';
 		}
 		else
 		{
@@ -83,11 +37,11 @@
 				<input type="submit" name="btn_add" value="Add" class="btn btn-info">
 			</div>
 		</form>
-
-	<!-- This code is for the table -->
 		<?php
 		} 
 		 ?>
+
+		 <!-- This is the code for table -->
 		<br/>
 		<br/>
 		<div class="table-responsive">
@@ -97,51 +51,11 @@
 					<th>Edit</th>
 					<th>Delete</th>
 				</tr>
-	<!-- This is for showing the data in the website-->
-
-			<?php
-			$selectSql= "CALL selectCountry()";
-			$selectResult=mysqli_query($connect,$selectSql);
-			if(mysqli_num_rows($selectResult) > 0) 
-			{
-				while($row=mysqli_fetch_array($selectResult))
-				{
-					?>
-					<tr>
-						<td><?php echo $row["country_name"]; ?></td>
-						<td><a href="index.php?edit=1&country_id=<?php echo $row["country_id"];?>">Edit</a></td>
-						<td><a href="index.php?delete=1&country_id=<?php echo $row["country_id"];?>" class="btn_delete" id="<?php echo $row["country_id"];?>">Delete</a></td>
-					</tr>
-					<?php
-				}
-				mysqli_next_result($connect);
-			}
-			else
-			{
-				?>
-					<tr>
-						<td colspan="3">No Data</td>
-					</tr>
+				<!-- For fetching all the data to website -->
 				<?php
-			}
-			?>
+				include_once 'Tools/fetch.php';
+				?>
 			</table>
 	</div>
 </body>
 </html>
-
-<!--<script>
-	$(document).ready(function(){
-		$('.btn_delete').click(function(){
-			var country_id= $(this).attr("id");
-			if(confirm("Are you sure you want to delete this?"))
-			{
-				window.location="index.php?delete=1&country_id="+country_id+"";
-			} 
-			else
-			{
-				return false;
-			}
-		});
-	});
-</script>
