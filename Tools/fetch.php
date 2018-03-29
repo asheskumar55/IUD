@@ -9,7 +9,7 @@
 				<tr>
 					<td><?php echo $row["country_name"]; ?></td>
 					<td><a href="index.php?edit=1&country_id=<?php echo $row["country_id"];?>">Edit</a></td>
-					<td><a href="index.php?delete=1&country_id=<?php echo $row["country_id"];?>" class="btn_delete" id="<?php echo $row["country_id"];?>">Delete</a></td>
+					<td><a href="index.php?btn_delete=1&country_id=<?php echo $row["country_id"];?>">Delete</a></td>
 				</tr>
 				<?php
 			}

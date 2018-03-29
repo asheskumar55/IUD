@@ -18,7 +18,7 @@
 		}
 	}
 
-	if(isset($_GET["delete"]))
+	if(isset($_GET["btn_delete"]))
 		{	
 			$deleteSql="CALL deleteCountry('".$_GET['country_id']."')";
 			if(mysqli_query($connect,$deleteSql))

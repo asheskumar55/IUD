@@ -14,7 +14,6 @@
 		<input type="text" name="country_name" class="form-control" value="<?php echo $singleRow["country_name"]?>">
 	</div>
 	<div class="form-group" align="center">
-		<input type="hidden" name="country_id" value="<?php echo $singleRow["country_id"]; ?>"/>
 		<input type="submit" name="btn_edit" value="Edit" class="btn btn-info">
 	</div>
 </form>
